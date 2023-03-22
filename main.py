@@ -67,20 +67,28 @@ except HttpError as e:
     exit()
 
 # Retrieve the videos that match the search query
-try:
-    search_response = youtube.search().list(
-        q=QUERY,
-        type='video',
-        part='id,snippet',
-        maxResults=MAX_RESULTS
-    ).execute()
+video_links = []
+next_page_token = None
+while len(video_links) < MAX_RESULTS:
+    try:
+        search_response = youtube.search().list(
+            q=QUERY,
+            type='video',
+            part='id,snippet',
+            maxResults=min(MAX_RESULTS - len(video_links), 50),
+            pageToken=next_page_token
+        ).execute()
 
-    video_ids = [search_result['id']['videoId'] for search_result in search_response.get('items', [])]
-    video_links = ['https://www.youtube.com/watch?v=' + video_id for video_id in video_ids]
+        video_ids = [search_result['id']['videoId'] for search_result in search_response.get('items', [])]
+        video_links.extend(['https://www.youtube.com/watch?v=' + video_id for video_id in video_ids])
+        next_page_token = search_response.get('nextPageToken')
 
-except HttpError as e:
-    print(f'An error occurred while retrieving the videos: {e}')
-    exit()
+        if next_page_token is None:
+            break
+
+    except HttpError as e:
+        print(f'An error occurred while retrieving the videos: {e}')
+        exit()
 
 # Print the retrieved video links
 for video_link in video_links:
