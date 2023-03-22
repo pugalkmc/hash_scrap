@@ -2,14 +2,14 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # Set up YouTube API client
-API_KEY = "YOUR_API_KEY"
+API_KEY = "AIzaSyBw-VWCD-28ighChu3aSrryaxL8F1GIcIo"
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
 # Define the hashtag to search for
-hashtag = "YOUR_HASHTAG"
+hashtag = "pulsechain"
 
 # Set the number of results to retrieve per page
-max_results = 1000
+max_results = 10000
 
 # Call the search.list method to retrieve videos that match the search term
 next_page_token = None
