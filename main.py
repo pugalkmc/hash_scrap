@@ -2,8 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # Set up YouTube API client
-API_KEY = "
-AIzaSyBw-VWCD-28ighChu3aSrryaxL8F1GIcIo"
+API_KEY = "AIzaSyBw-VWCD-28ighChu3aSrryaxL8F1GIcIo"
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
 # Define the hashtag to search for
